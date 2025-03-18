@@ -80,9 +80,11 @@ unset($_SESSION['cart_message']); // Remove message after displaying it
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $stock = intval($row['stock']);
+                $image_urls = json_decode($row['image_url'], true);
+                $first_image_url = is_array($image_urls) && count($image_urls) > 0 ? $image_urls[0] : '';
                 ?>
                 <div class="product-card">
-                    <img class="product-image" src="<?php echo htmlspecialchars($row['image_url']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                    <img class="product-image" src="<?php echo htmlspecialchars($first_image_url); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
                     <h3><?php echo htmlspecialchars($row['name']); ?></h3>
                     <p>Price: $<?php echo number_format($row['price'], 2); ?></p>
                     <p>Brand: <?php echo htmlspecialchars($row['brand']); ?></p>
